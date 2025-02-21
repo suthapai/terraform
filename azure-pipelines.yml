@@ -20,7 +20,7 @@ steps:
     terraformVersion: 'latest'   
 
 - task: TerraformTaskV4@4
-  displayname: Terraform Init
+  displayName: Terraform Plan
   inputs:
     provider: 'azurerm'
     command: 'init'
