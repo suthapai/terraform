@@ -21,7 +21,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    backendAzureRmResourceGroupName: 'rg-tfstate'
+    backendAzureRmResourceGroupName: '$(resourcegroup)'
 - task: TerraformTaskV4@4
   inputs:
     provider: 'azurerm'
