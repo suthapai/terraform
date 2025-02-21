@@ -20,7 +20,7 @@ steps:
     terraformVersion: 'latest'   
 
 - task: TerraformTaskV4@4
-  displayName: Terraform Plan
+  displayName: Terraform init
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -29,3 +29,9 @@ steps:
     backendAzureRmStorageAccountName: '$(storageaccount)'
     backendAzureRmContainerName: '$(container)'
     backendAzureRmKey: '$(tfstatefile)' 
+
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'Azure subscription-devops(7)(2f988b10-9ba2-4c26-8472-c863d0ff88e4)'
