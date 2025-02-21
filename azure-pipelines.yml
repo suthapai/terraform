@@ -13,16 +13,14 @@ variables:
   storageaccount: sgtfstatefile
   container: mytfstate
   tfstatefile: terraform.tfstate
+  
 steps:
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'   
+
 - task: TerraformTaskV4@4
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    backendAzureRmResourceGroupName: '$(resourcegroup)'
-- task: TerraformTaskV4@4
+  displayname: Terraform Init
   inputs:
     provider: 'azurerm'
     command: 'init'
