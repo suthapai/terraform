@@ -8,9 +8,11 @@ trigger:
 
 pool:
   vmImage: ubuntu-latest
-
-
-
+variables:
+  resourcegroup: rg-tfstate
+  storageaccount: sgtfstatefile
+  container: mytfstate
+  tfstatefile: terraform.tfstate
 steps:
 - task: TerraformInstaller@1
   inputs:
@@ -23,14 +25,9 @@ steps:
 - task: TerraformTaskV4@4
   inputs:
     provider: 'azurerm'
-    command: 'plan'
-    commandOptions: '-out=tfplan'
-    environmentServiceNameAzureRM: 'Azure subscription-devops(3)(2f988b10-9ba2-4c26-8472-c863d0ff88e4)'
-    backendAzureRmStorageAccountName: 'sgtfstatefile'
-    backendAzureRmContainerName: 'mytfstate'
-    backendAzureRmKey: 'terraform.tfstate'
-- task: TerraformTaskV4@4
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    environmentServiceNameAzureRM: 'Azure subscription-devops(4)(2f988b10-9ba2-4c26-8472-c863d0ff88e4)'
+    command: 'init'
+    backendServiceArm: 'Azure subscription-devops(5)(2f988b10-9ba2-4c26-8472-c863d0ff88e4)'
+    backendAzureRmResourceGroupName: '$(resourcegroup)'
+    backendAzureRmStorageAccountName: '$(storageaccount)'
+    backendAzureRmContainerName: '$(container)'
+    backendAzureRmKey: '$(tfstatefile)' 
