@@ -10,6 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 
+
 steps:
 - task: TerraformInstaller@1
   inputs:
@@ -18,24 +19,18 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    backendServiceArm: 'Azure subscription-devops(2f988b10-9ba2-4c26-8472-c863d0ff88e4)'
-    backendAzureRmResourceGroupName: '$(resourcegroup)'
-    backendAzureRmStorageAccountName: '$(storageaccount)'
-    backendAzureRmContainerName: '$(container)'
-    backendAzureRmKey: '$(tfstatefile)'
+    backendAzureRmResourceGroupName: 'rg-tfstate'
 - task: TerraformTaskV4@4
   inputs:
     provider: 'azurerm'
     command: 'plan'
     commandOptions: '-out=tfplan'
-    environmentServiceNameAzureRM: 'Azure subscription-devops(1)(2f988b10-9ba2-4c26-8472-c863d0ff88e4)'
-
--
-
-
+    environmentServiceNameAzureRM: 'Azure subscription-devops(3)(2f988b10-9ba2-4c26-8472-c863d0ff88e4)'
+    backendAzureRmStorageAccountName: 'sgtfstatefile'
+    backendAzureRmContainerName: 'mytfstate'
+    backendAzureRmKey: 'terraform.tfstate'
 - task: TerraformTaskV4@4
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    commandOptions: 'tfplan'
-    environmentServiceNameAzureRM: 'Azure subscription-devops(2)(2f988b10-9ba2-4c26-8472-c863d0ff88e4)'
+    environmentServiceNameAzureRM: 'Azure subscription-devops(4)(2f988b10-9ba2-4c26-8472-c863d0ff88e4)'
